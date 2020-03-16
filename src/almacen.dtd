@@ -1,0 +1,38 @@
+<¡DOCTYPE almacen> 
+[
+
+	<¡ELEMENT almacen(productos, clientes, pedidos)>
+	<¡ELEMENT productos(producto+)>
+	<¡ELEMENT producto(codigo,nombre,descripcion,stock,localizacion,pendientes)>
+	<¡ELEMENT codigo(#PCDATA)>
+	<¡ELEMENT nombre(#PCDATA)>
+	<¡ELEMENT descripcion(#PCDATA)>
+	<¡ELEMENT stock(#PCDATA)>
+	<¡ELEMENT localizacion(pasillo,estanteria,estante)>
+	<¡ELEMENT pasillo(#PCDATA)>
+	<¡ELEMENT estanteria(#PCDATA)>
+	<¡ELEMENT estante(#PCDATA)>
+	<¡ELEMENT pendientes(#PCDATA)>
+	
+	<¡ELEMENT clientes(cliente+)>
+	<¡ELEMENT cliente(nombre,apellidos,email,telefono_contacto,direccion)>
+	<¡ELEMENT apellidos(#PCDATA)>
+	<¡ELEMENT email(#PCDATA)> 
+	<¡ELEMENT telefono_contacto(#PCDATA)>
+	<¡ELEMENT direccion(calle,numero,codigo_postal,poblacion,pais)>
+	<¡ELEMENT calle(#PCDATA)>
+	<¡ELEMENT numero(#PCDATA)>
+	<¡ELEMENT codigo_postal(#PCDATA)>
+	<¡ELEMENT poblacion(#PCDATA)>
+	<¡ELEMENT pais(#PCDATA)>
+	
+	<¡ELEMENT pedidos(pedido+)>
+	<¡ELEMENT pedido(linea_pedido+,direccion,destinatario,fecha_entrega)>
+	<¡ELEMENT linea_pedido(codigo,cantidad)>
+	<¡ELEMENT cantidad(#PCDATA)>
+	<¡ELEMENT destinatario(#PCDATA)>
+	<¡ELEMENT fecha_entrega(#PCDATA)>
+
+]>
+
+
