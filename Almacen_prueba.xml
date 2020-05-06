@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<almacen>
+  <productos>
+    <producto>
+      <codigo>152632523</codigo>
+      <nombre>Gusanitos</nombre>
+      <descripcion>Risi</descripcion>
+      <stock>8</stock>
+      <localizacion>
+        <pasillo>6</pasillo>
+        <estanteria>3</estanteria>
+        <estante>4</estante>
+      </localizacion>
+      <pendientes>2</pendientes>
+    </producto>
+  </productos>
+  <clientes>
+    <cliente>
+      <nombre>Pepe</nombre>
+      <apellidos>Gotera</apellidos>
+      <email>PepeelÑapas@hotmail.com</email>
+      <telefono_contacto>653841245</telefono_contacto>
+      <direccion>
+        <calle>Calle Falsa</calle>
+        <numero>1</numero>
+        <codigo_postal>28500</codigo_postal>
+        <poblacion>Madrid</poblacion>
+        <pais>España</pais>
+      </direccion>
+    </cliente>
+  </clientes>
+  <pedidos>
+    <pedido>
+      <linea_pedido>
+        <codigo>13231354</codigo>
+        <cantidad>15646545</cantidad>
+      </linea_pedido>
+      <linea_pedido>
+        <codigo>13132154</codigo>
+        <cantidad>22</cantidad>
+      </linea_pedido>
+      <codigo>53654225</codigo>
+      <direccion>
+        <calle>Calle Pantomima Full</calle>
+        <numero>53</numero>
+        <codigo_postal>25400</codigo_postal>
+        <poblacion>Burgos</poblacion>
+        <pais>España</pais>
+      </direccion>
+      <destinatario>Pepe Manolete</destinatario>
+      <fecha_entrega>06/12/2142</fecha_entrega>
+    </pedido>
+  </pedidos>
+</almacen>
