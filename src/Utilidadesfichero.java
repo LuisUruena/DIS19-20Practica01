@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,12 +16,41 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class Utilidadesfichero {
 
-	public static Almacen cargarAlmacenxml(String ruta) {
-
-		return null;
+	public static Almacen cargarAlmacenxml(String ruta) 
+	{
+		Almacen almacenXml = new Almacen();
+		
+		try {
+			
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			
+			Document doc = docBuilder.parse(ruta);
+			
+			cargarProductos(almacenXml,doc);
+			cargarClientes(almacenXml,doc);
+			cargarPedidos(almacenXml,doc);
+		
+			
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return almacenXml;
 	}
 
 	public static void guardarAlmacenxml(Almacen almacen, String ruta) {
@@ -68,6 +98,174 @@ public class Utilidadesfichero {
 			e.printStackTrace();
 		}
 	}
+	
+	private static void cargarProductos(Almacen almacen, Document doc) 
+	{
+		String codigoLeido, nombreLeido, descripcionLeido, stockLeido;
+		int pasilloLeido, estanteriaLeido, estanteLeido, pendientesLeido;
+		NodeList listaProductos = doc.getElementsByTagName("producto");
+		
+		for(int i=0;i<listaProductos.getLength();i++) 
+		{
+			Node nodo = listaProductos.item(i);
+			Element e = (Element)nodo;
+			NodeList hijos = e.getChildNodes();
+			
+			Node hijoCodigo = hijos.item(0);
+			codigoLeido = hijoCodigo.getTextContent();
+			
+			Node hijoNombre = hijos.item(1);
+			nombreLeido = hijoNombre.getTextContent();
+			
+			Node hijoDescripcion = hijos.item(2);
+			descripcionLeido = hijoDescripcion.getTextContent();
+			
+			Node hijoStock = hijos.item(3);
+			stockLeido = hijoStock.getTextContent();
+			
+			
+			Node hijoLocalizacion = hijos.item(4);
+			Element el = (Element)hijoLocalizacion;
+			NodeList hijosLocalizacion = el.getChildNodes();
+			
+			Node hijoPasillo = hijosLocalizacion.item(0);
+			pasilloLeido = Integer.parseInt(hijoPasillo.getTextContent());
+			
+			Node hijoEstanteria = hijosLocalizacion.item(1);
+			estanteriaLeido = Integer.parseInt(hijoEstanteria.getTextContent());
+			
+			Node hijoEstante= hijosLocalizacion.item(2);
+			estanteLeido = Integer.parseInt(hijoEstante.getTextContent());
+			
+			Localizacion localizacionLeido = new Localizacion(pasilloLeido, estanteriaLeido, estanteLeido);
+			
+			
+			Node hijoPendientes = hijos.item(5);
+			pendientesLeido = Integer.parseInt(hijoPendientes.getTextContent());
+			
+			Producto productoLeido = new Producto(codigoLeido, nombreLeido, descripcionLeido, stockLeido, localizacionLeido, pendientesLeido);
+			
+			almacen.añadirProducto(productoLeido);
+		}
+		
+	}
+	
+	private static void cargarClientes(Almacen almacen, Document doc) 
+	{
+		String nombreLeido, apellidosLeido, emailLeido, telefonoLeido, calleLeido, numeroLeido, codigoPostalLeido, poblacionLeido, paisLeido;
+		
+		NodeList listaClientes = doc.getElementsByTagName("cliente");
+		
+		for(int i=0;i<listaClientes.getLength();i++) 
+		{
+			Node nodo = listaClientes.item(i);
+			Element e = (Element)nodo;
+			NodeList hijos = e.getChildNodes();
+			
+			Node hijoNombre = hijos.item(0);
+			nombreLeido = hijoNombre.getTextContent();
+			
+			Node hijoApellidos = hijos.item(1);
+			apellidosLeido = hijoApellidos.getTextContent();
+			
+			Node hijoEmail = hijos.item(2);
+			emailLeido = hijoEmail.getTextContent();
+			
+			Node hijoTelefono = hijos.item(3);
+			telefonoLeido = hijoTelefono.getTextContent();
+			
+			Node hijoDireccion = hijos.item(4);
+			Element ed = (Element)hijoDireccion;
+			NodeList hijosDireccion = ed.getChildNodes();
+			
+			Node hijoCalle = hijosDireccion.item(0);
+			calleLeido = hijoCalle.getTextContent();
+			
+			Node hijoNumero = hijosDireccion.item(1);
+			numeroLeido = hijoNumero.getTextContent();
+			
+			Node hijoCodigoPostal = hijosDireccion.item(2);
+			codigoPostalLeido = hijoCodigoPostal.getTextContent();
+			
+			Node hijoPoblacion = hijosDireccion.item(3);
+			poblacionLeido = hijoPoblacion.getTextContent();
+			
+			Node hijoPais = hijosDireccion.item(4);
+			paisLeido = hijoPais.getTextContent();
+			
+			Direccion direccionLeido = new Direccion(calleLeido, numeroLeido, codigoPostalLeido, poblacionLeido, paisLeido);
+			
+			
+			Cliente clienteLeido = new Cliente(nombreLeido, apellidosLeido, emailLeido, telefonoLeido, direccionLeido);
+			
+			almacen.añadirCliente(clienteLeido);
+		}
+		
+	}
+	
+	private static void cargarPedidos(Almacen almacen, Document doc) 
+	{
+		String codigoLeido, direccionEntregaLeido, destinatarioLeido, fechaEntregaLeido;
+		ArrayList<Lineapedido> lineaPedidoLeido;
+		
+		NodeList listaPedidos = doc.getElementsByTagName("pedido");
+		
+		for(int i=0;i<listaPedidos.getLength();i++) 
+		{
+			
+			/*do()
+			{
+				
+			} while();
+				
+			Node nodo = listaClientes.item(i);
+			Element e = (Element)nodo;
+			NodeList hijos = e.getChildNodes();
+			
+			Node hijoNombre = hijos.item(0);
+			nombreLeido = hijoNombre.getTextContent();
+			
+			Node hijoApellidos = hijos.item(1);
+			apellidosLeido = hijoApellidos.getTextContent();
+			
+			Node hijoEmail = hijos.item(2);
+			emailLeido = hijoEmail.getTextContent();
+			
+			Node hijoTelefono = hijos.item(3);
+			telefonoLeido = hijoTelefono.getTextContent();
+			
+			Node hijoDireccion = hijos.item(4);
+			Element ed = (Element)hijoDireccion;
+			NodeList hijosDireccion = ed.getChildNodes();
+			
+			Node hijoCalle = hijosDireccion.item(0);
+			calleLeido = hijoCalle.getTextContent();
+			
+			Node hijoNumero = hijosDireccion.item(1);
+			numeroLeido = hijoNumero.getTextContent();
+			
+			Node hijoCodigoPostal = hijosDireccion.item(2);
+			codigoPostalLeido = hijoCodigoPostal.getTextContent();
+			
+			Node hijoPoblacion = hijosDireccion.item(3);
+			poblacionLeido = hijoPoblacion.getTextContent();
+			
+			Node hijoPais = hijosDireccion.item(4);
+			paisLeido = hijoPais.getTextContent();
+			
+			Direccion direccionLeido = new Direccion(calleLeido, numeroLeido, codigoPostalLeido, poblacionLeido, paisLeido);
+			
+			
+			Cliente clienteLeido = new Cliente(nombreLeido, apellidosLeido, emailLeido, telefonoLeido, direccionLeido);
+			
+			almacen.añadirCliente(clienteLeido);*/
+		}
+		
+		
+		
+	}
+	
+	
 
 	private static void guardarProductos(Element rootElement, Document doc, ArrayList<Producto> productos) 
 	{
