@@ -317,7 +317,8 @@ public class Main {
 
 	private static void modificarCliente(Almacen almacen) 
 	{
-		String emailCliente, emailModificar, confirmar; 
+		String emailCliente, emailModificar, telefonoModificar, confirmar;
+		Direccion direccionModificar;
 		Cliente clienteModificado;
 		
 		Scanner lector = new Scanner (System.in);
@@ -345,6 +346,30 @@ public class Main {
 				almacen.borrarCliente(emailCliente);
 				almacen.añadirCliente(clienteModificado);
 			}
+			
+			System.out.println("Teléfono de contacto actual:\n" + clienteModificado.getTelefonoContacto());
+			System.out.println("¿Quieres modificarlo (S/N)?");
+			confirmar = lector.nextLine();
+			if(confirmar.equalsIgnoreCase("S"))
+			{
+				System.out.println("Introduce el nuevo teléfono de contacto: ");
+				telefonoModificar = lector.nextLine();
+				clienteModificado.setTelefonoContacto(telefonoModificar);
+			}
+			
+			System.out.println("Dirección actual:\n" + clienteModificado.getDireccion());
+			System.out.println("¿Quieres modificarla (S/N)?");
+			confirmar = lector.nextLine();
+			if(confirmar.equalsIgnoreCase("S"))
+			{
+				direccionModificar = Utilidadeslectura.leerDireccion("Introduce la nueva dirección: ");
+				clienteModificado.setDireccion(direccionModificar);
+			}
+			
+			System.out.println("Cliente modificado correctamente.");
+			System.out.println("Datos del cliente modificado:");
+			System.out.println(""+clienteModificado.toString());
+			
 		}
 		
 		
@@ -352,7 +377,79 @@ public class Main {
 
 	private static void modificarProducto(Almacen almacen) 
 	{
+		String codigoProducto, nombreModificar, descripcionModificar, stockModificar, confirmar;
+		int pendientesModificar;
+		Localizacion localizacionModificar;
+		Producto productoModificado;
 		
+		
+		Scanner lector = new Scanner (System.in);
+		System.out.println("Introduce el código del producto a modificar:"); 
+		codigoProducto = lector.nextLine();
+		
+		productoModificado = almacen.buscarProducto(codigoProducto);
+		
+		if(productoModificado == null) 
+		{
+			System.out.println("Error. El código no se corresponde a ningún producto.");
+		}
+		else 
+		{
+			System.out.println("Nombre actual del producto:\n" + productoModificado.getNombre());
+			System.out.println("¿Quieres modificarlo (S/N)?");
+			confirmar = lector.nextLine();
+			if(confirmar.equalsIgnoreCase("S"))
+			{
+				System.out.println("Introduce el nuevo nombre: ");
+				nombreModificar = lector.nextLine();
+				productoModificado.setNombre(nombreModificar);
+			}
+			
+			System.out.println("Descripción actual del producto:\n" + productoModificado.getDescripcion());
+			System.out.println("¿Quieres modificarlo (S/N)?");
+			confirmar = lector.nextLine();
+			if(confirmar.equalsIgnoreCase("S"))
+			{
+				System.out.println("Introduce la nueva descripción: ");
+				descripcionModificar = lector.nextLine();
+				productoModificado.setDescripcion(descripcionModificar);
+			}
+			
+			System.out.println("Stock actual del producto:\n" + productoModificado.getStock());
+			System.out.println("¿Quieres modificarlo (S/N)?");
+			confirmar = lector.nextLine();
+			if(confirmar.equalsIgnoreCase("S"))
+			{
+				System.out.println("Introduce el nuevo stock: ");
+				stockModificar = lector.nextLine();
+				productoModificado.setStock(stockModificar);
+			}
+			
+			System.out.println("Localización actual del producto:\n" + productoModificado.getLocalizacion());
+			System.out.println("¿Quieres modificarlo (S/N)?");
+			confirmar = lector.nextLine();
+			if(confirmar.equalsIgnoreCase("S"))
+			{	
+				System.out.println("Introduce la nueva localización: ");
+				localizacionModificar = Utilidadeslectura.leerLocalizacion();
+				productoModificado.setLocalizacion(localizacionModificar);
+			}
+			
+			System.out.println("Número de productos pendientes actuales:\n" + productoModificado.getPendientes());
+			System.out.println("¿Quieres modificarlo (S/N)?");
+			confirmar = lector.nextLine();
+			if(confirmar.equalsIgnoreCase("S"))
+			{	
+				System.out.println("Introduce el nuevo número de pendientes: ");
+				pendientesModificar = Integer.parseInt(lector.nextLine());
+				productoModificado.setPendientes(pendientesModificar);
+			}
+			
+			System.out.println("Producto modificado correctamente.");
+			System.out.println("Datos del producto modificado:");
+			System.out.println(""+productoModificado.toString());
+			
+		}
 		
 	}
 
