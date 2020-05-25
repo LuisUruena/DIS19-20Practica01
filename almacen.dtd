@@ -26,8 +26,9 @@
 	<¡ELEMENT pais(#PCDATA)>
 	
 	<¡ELEMENT pedidos(pedido+)>
-	<¡ELEMENT pedido(linea_pedido+,codigo,direccion,destinatario,fecha_entrega)>
+	<¡ELEMENT pedido(linea_pedido+,codigo_pedido,direccion,destinatario,fecha_entrega)>
 	<¡ELEMENT linea_pedido(codigo,cantidad)>
+	<¡ELEMENT codigo_pedido(#PCDATA)>
 	<¡ELEMENT cantidad(#PCDATA)>
 	<¡ELEMENT destinatario(#PCDATA)>
 	<¡ELEMENT fecha_entrega(#PCDATA)>
