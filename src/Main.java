@@ -455,7 +455,15 @@ public class Main {
 
 	private static void abrirAlmacen() 
 	{
+		Almacen almacenCargado;
+		Scanner lector = new Scanner (System.in);
+		String ruta;
+		System.out.println("Introduce la ruta del archivo xml del almacén:");
+		ruta = lector.nextLine();
 		
+		almacenCargado = Utilidadesfichero.cargarAlmacenxml(ruta);
+		
+		operarAlmacen(almacenCargado);
 		
 	}
 
@@ -463,6 +471,11 @@ public class Main {
 	{
 		Almacen almacenNuevo = new Almacen();
 		
+		operarAlmacen(almacenNuevo);
+	}
+	
+	private static void operarAlmacen(Almacen almacen) 
+	{
 		int opcion = 0;
 		Scanner lector = new Scanner(System.in);
 		do {
@@ -491,55 +504,55 @@ public class Main {
 				break;
 				
 			case 1:
-				guardarAlmacen(almacenNuevo);
+				guardarAlmacen(almacen);
 				break;
 
 			case 2:
-				añadirProducto(almacenNuevo);
+				añadirProducto(almacen);
 				break;
 
 			case 3:
-				añadirCliente(almacenNuevo);
+				añadirCliente(almacen);
 				break;
 				
 			case 4:
-				añadirPedido(almacenNuevo);
+				añadirPedido(almacen);
 				break;
 				
 			case 5:
-				borrarProducto(almacenNuevo);
+				borrarProducto(almacen);
 				break;
 				
 			case 6:
-				borrarCliente(almacenNuevo);
+				borrarCliente(almacen);
 				break;
 				
 			case 7:
-				borrarPedido(almacenNuevo);
+				borrarPedido(almacen);
 				break;
 				
 			case 8:
-				buscarProducto(almacenNuevo);
+				buscarProducto(almacen);
 				break;
 				
 			case 9:
-				buscarCliente(almacenNuevo);
+				buscarCliente(almacen);
 				break;
 				
 			case 10:
-				buscarPedido(almacenNuevo);
+				buscarPedido(almacen);
 				break;
 				
 			case 11:
-				modificarProducto(almacenNuevo);
+				modificarProducto(almacen);
 				break;
 				
 			case 12:
-				modificarCliente(almacenNuevo);
+				modificarCliente(almacen);
 				break;
 				
 			case 13:
-				modificarPedido(almacenNuevo);
+				modificarPedido(almacen);
 				break;
 
 			default:

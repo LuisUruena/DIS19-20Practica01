@@ -108,44 +108,43 @@ public class Utilidadesfichero {
 		for(int i=0;i<listaProductos.getLength();i++) 
 		{
 			Node nodo = listaProductos.item(i);
-			Element e = (Element)nodo;
-			NodeList hijos = e.getChildNodes();
-			
-			Node hijoCodigo = hijos.item(0);
-			codigoLeido = hijoCodigo.getTextContent();
-			
-			Node hijoNombre = hijos.item(1);
-			nombreLeido = hijoNombre.getTextContent();
-			
-			Node hijoDescripcion = hijos.item(2);
-			descripcionLeido = hijoDescripcion.getTextContent();
-			
-			Node hijoStock = hijos.item(3);
-			stockLeido = hijoStock.getTextContent();
-			
-			
-			Node hijoLocalizacion = hijos.item(4);
-			Element el = (Element)hijoLocalizacion;
-			NodeList hijosLocalizacion = el.getChildNodes();
-			
-			Node hijoPasillo = hijosLocalizacion.item(0);
-			pasilloLeido = Integer.parseInt(hijoPasillo.getTextContent());
-			
-			Node hijoEstanteria = hijosLocalizacion.item(1);
-			estanteriaLeido = Integer.parseInt(hijoEstanteria.getTextContent());
-			
-			Node hijoEstante= hijosLocalizacion.item(2);
-			estanteLeido = Integer.parseInt(hijoEstante.getTextContent());
-			
-			Localizacion localizacionLeido = new Localizacion(pasilloLeido, estanteriaLeido, estanteLeido);
-			
-			
-			Node hijoPendientes = hijos.item(5);
-			pendientesLeido = Integer.parseInt(hijoPendientes.getTextContent());
-			
-			Producto productoLeido = new Producto(codigoLeido, nombreLeido, descripcionLeido, stockLeido, localizacionLeido, pendientesLeido);
-			
-			almacen.añadirProducto(productoLeido);
+			if(nodo.getNodeType() == Node.ELEMENT_NODE) 
+			{
+				Element e = (Element)nodo;
+				Node hijoCodigo = e.getElementsByTagName("codigo").item(0);
+				codigoLeido = hijoCodigo.getTextContent();
+				
+				Node hijoNombre = e.getElementsByTagName("nombre").item(0);
+				nombreLeido = hijoNombre.getTextContent();
+				
+				Node hijoDescripcion = e.getElementsByTagName("descripcion").item(0);
+				descripcionLeido = hijoDescripcion.getTextContent();
+				
+				Node hijoStock = e.getElementsByTagName("stock").item(0);
+				stockLeido = hijoStock.getTextContent();
+				
+				Node hijoLocalizacion = e.getElementsByTagName("localizacion").item(0);
+				Element el = (Element)hijoLocalizacion;
+				
+				Node hijoPasillo = el.getElementsByTagName("pasillo").item(0);
+				pasilloLeido = Integer.parseInt(hijoPasillo.getTextContent());
+				
+				Node hijoEstanteria = el.getElementsByTagName("estanteria").item(0);
+				estanteriaLeido = Integer.parseInt(hijoEstanteria.getTextContent());
+				
+				Node hijoEstante = el.getElementsByTagName("estante").item(0);
+				estanteLeido = Integer.parseInt(hijoEstante.getTextContent());
+
+				Localizacion localizacionLeido = new Localizacion(pasilloLeido, estanteriaLeido, estanteLeido);
+				
+				Node hijoPendientes = e.getElementsByTagName("pendientes").item(0);
+				pendientesLeido = Integer.parseInt(hijoPendientes.getTextContent());
+				
+				Producto productoLeido = new Producto(codigoLeido, nombreLeido, descripcionLeido, stockLeido, localizacionLeido, pendientesLeido);
+				
+				almacen.añadirProducto(productoLeido);
+				
+			}	
 		}
 		
 	}
@@ -159,110 +158,127 @@ public class Utilidadesfichero {
 		for(int i=0;i<listaClientes.getLength();i++) 
 		{
 			Node nodo = listaClientes.item(i);
-			Element e = (Element)nodo;
-			NodeList hijos = e.getChildNodes();
-			
-			Node hijoNombre = hijos.item(0);
-			nombreLeido = hijoNombre.getTextContent();
-			
-			Node hijoApellidos = hijos.item(1);
-			apellidosLeido = hijoApellidos.getTextContent();
-			
-			Node hijoEmail = hijos.item(2);
-			emailLeido = hijoEmail.getTextContent();
-			
-			Node hijoTelefono = hijos.item(3);
-			telefonoLeido = hijoTelefono.getTextContent();
-			
-			Node hijoDireccion = hijos.item(4);
-			Element ed = (Element)hijoDireccion;
-			NodeList hijosDireccion = ed.getChildNodes();
-			
-			Node hijoCalle = hijosDireccion.item(0);
-			calleLeido = hijoCalle.getTextContent();
-			
-			Node hijoNumero = hijosDireccion.item(1);
-			numeroLeido = hijoNumero.getTextContent();
-			
-			Node hijoCodigoPostal = hijosDireccion.item(2);
-			codigoPostalLeido = hijoCodigoPostal.getTextContent();
-			
-			Node hijoPoblacion = hijosDireccion.item(3);
-			poblacionLeido = hijoPoblacion.getTextContent();
-			
-			Node hijoPais = hijosDireccion.item(4);
-			paisLeido = hijoPais.getTextContent();
-			
-			Direccion direccionLeido = new Direccion(calleLeido, numeroLeido, codigoPostalLeido, poblacionLeido, paisLeido);
+			if(nodo.getNodeType() == Node.ELEMENT_NODE) 
+			{
+				Element e = (Element)nodo;
 			
 			
-			Cliente clienteLeido = new Cliente(nombreLeido, apellidosLeido, emailLeido, telefonoLeido, direccionLeido);
+				Node hijoNombre = e.getElementsByTagName("nombre").item(0);
+				nombreLeido = hijoNombre.getTextContent();
 			
-			almacen.añadirCliente(clienteLeido);
+				Node hijoApellidos = e.getElementsByTagName("apellidos").item(0);
+				apellidosLeido = hijoApellidos.getTextContent();
+			
+				Node hijoEmail = e.getElementsByTagName("email").item(0);
+				emailLeido = hijoEmail.getTextContent();
+			
+				Node hijoTelefono = e.getElementsByTagName("telefono_contacto").item(0);
+				telefonoLeido = hijoTelefono.getTextContent();
+			
+				Node hijoDireccion = e.getElementsByTagName("direccion").item(0);
+				Element ed = (Element)hijoDireccion;
+				
+			
+				Node hijoCalle = ed.getElementsByTagName("calle").item(0);
+				calleLeido = hijoCalle.getTextContent();
+			
+				Node hijoNumero = ed.getElementsByTagName("numero").item(0);
+				numeroLeido = hijoNumero.getTextContent();
+			
+				Node hijoCodigoPostal = ed.getElementsByTagName("codigo_postal").item(0);
+				codigoPostalLeido = hijoCodigoPostal.getTextContent();
+			
+				Node hijoPoblacion = ed.getElementsByTagName("poblacion").item(0);
+				poblacionLeido = hijoPoblacion.getTextContent();
+			
+				Node hijoPais = ed.getElementsByTagName("pais").item(0);
+				paisLeido = hijoPais.getTextContent();
+			
+				Direccion direccionLeido = new Direccion(calleLeido, numeroLeido, codigoPostalLeido, poblacionLeido, paisLeido);
+			
+			
+				Cliente clienteLeido = new Cliente(nombreLeido, apellidosLeido, emailLeido, telefonoLeido, direccionLeido);
+			
+				almacen.añadirCliente(clienteLeido);
+			}
 		}
 		
 	}
 	
 	private static void cargarPedidos(Almacen almacen, Document doc) 
 	{
-		String codigoLeido, direccionEntregaLeido, destinatarioLeido, fechaEntregaLeido;
-		ArrayList<Lineapedido> lineaPedidoLeido;
+		String codigoLeidoLP, codigoLeido, calleLeido, numeroLeido, codigoPostalLeido, poblacionLeido, paisLeido, destinatarioLeido, fechaEntregaLeido;
+		int cantidadLeidoLP;
+		
 		
 		NodeList listaPedidos = doc.getElementsByTagName("pedido");
 		
 		for(int i=0;i<listaPedidos.getLength();i++) 
 		{
 			
-			/*do()
+			Node nodo = listaPedidos.item(i);
+			if(nodo.getNodeType() == Node.ELEMENT_NODE) 
 			{
+				Element e = (Element)nodo;
+				NodeList lineasP = e.getElementsByTagName("linea_pedido");  
+				ArrayList<Lineapedido> lineasPedidoLeido = new ArrayList<>();
 				
-			} while();
+				for(int j=0;j<lineasP.getLength();j++) 
+				{
+						Node hijoLineaPedido = lineasP.item(j);
+					
+						Element elp = (Element)hijoLineaPedido;
+						
+						Node hijoCodigoLP = elp.getElementsByTagName("codigo").item(0);
+						codigoLeidoLP = hijoCodigoLP.getTextContent();
+						
+						Node hijoCantidadLP = elp.getElementsByTagName("cantidad").item(0);
+						cantidadLeidoLP = Integer.parseInt(hijoCantidadLP.getTextContent());
+						
+						Lineapedido lineaPedidoLeido = new Lineapedido(codigoLeidoLP, cantidadLeidoLP);
+						
+						lineasPedidoLeido.add(lineaPedidoLeido);
+				}
 				
-			Node nodo = listaClientes.item(i);
-			Element e = (Element)nodo;
-			NodeList hijos = e.getChildNodes();
 			
-			Node hijoNombre = hijos.item(0);
-			nombreLeido = hijoNombre.getTextContent();
+				Node hijoCodigo = e.getElementsByTagName("codigo_pedido").item(0);
+				codigoLeido = hijoCodigo.getTextContent();
 			
-			Node hijoApellidos = hijos.item(1);
-			apellidosLeido = hijoApellidos.getTextContent();
+				Node hijoDireccionEntrega = e.getElementsByTagName("direccion").item(0);
+				Element ede = (Element)hijoDireccionEntrega;
 			
-			Node hijoEmail = hijos.item(2);
-			emailLeido = hijoEmail.getTextContent();
+				Node hijoCalle = ede.getElementsByTagName("calle").item(0);
+				calleLeido = hijoCalle.getTextContent();
 			
-			Node hijoTelefono = hijos.item(3);
-			telefonoLeido = hijoTelefono.getTextContent();
+				Node hijoNumero = ede.getElementsByTagName("numero").item(0);
+				numeroLeido = hijoNumero.getTextContent();
 			
-			Node hijoDireccion = hijos.item(4);
-			Element ed = (Element)hijoDireccion;
-			NodeList hijosDireccion = ed.getChildNodes();
+				Node hijoCodigoPostal = ede.getElementsByTagName("codigo_postal").item(0);
+				codigoPostalLeido = hijoCodigoPostal.getTextContent();
 			
-			Node hijoCalle = hijosDireccion.item(0);
-			calleLeido = hijoCalle.getTextContent();
+				Node hijoPoblacion = ede.getElementsByTagName("poblacion").item(0);
+				poblacionLeido = hijoPoblacion.getTextContent();
 			
-			Node hijoNumero = hijosDireccion.item(1);
-			numeroLeido = hijoNumero.getTextContent();
-			
-			Node hijoCodigoPostal = hijosDireccion.item(2);
-			codigoPostalLeido = hijoCodigoPostal.getTextContent();
-			
-			Node hijoPoblacion = hijosDireccion.item(3);
-			poblacionLeido = hijoPoblacion.getTextContent();
-			
-			Node hijoPais = hijosDireccion.item(4);
-			paisLeido = hijoPais.getTextContent();
-			
-			Direccion direccionLeido = new Direccion(calleLeido, numeroLeido, codigoPostalLeido, poblacionLeido, paisLeido);
+				Node hijoPais = ede.getElementsByTagName("pais").item(0);
+				paisLeido = hijoPais.getTextContent();
 			
 			
-			Cliente clienteLeido = new Cliente(nombreLeido, apellidosLeido, emailLeido, telefonoLeido, direccionLeido);
+				Direccion direccionEntregaLeido = new Direccion(calleLeido, numeroLeido, codigoPostalLeido, poblacionLeido, paisLeido);
 			
-			almacen.añadirCliente(clienteLeido);*/
-		}
-		
-		
-		
+			
+				Node hijoDestinatario = e.getElementsByTagName("destinatario").item(0);
+				destinatarioLeido = hijoDestinatario.getTextContent();
+			
+				Node hijoFechaEntrega = e.getElementsByTagName("fecha_entrega").item(0);
+				fechaEntregaLeido = hijoFechaEntrega.getTextContent();
+			
+			
+				Pedido pedidoLeido = new Pedido(lineasPedidoLeido,codigoLeido,direccionEntregaLeido,destinatarioLeido,fechaEntregaLeido);
+			
+				almacen.añadirPedido(pedidoLeido);
+			
+			}
+		}	
 	}
 	
 	
@@ -398,7 +414,7 @@ public class Utilidadesfichero {
 				lineaspedidoEl.appendChild(cantidadEl);		
 			}
 			
-			Element codigoEl = doc.createElement("codigo");
+			Element codigoEl = doc.createElement("codigo_pedido");
 			codigoEl.appendChild(doc.createTextNode(pe.getCodigo()));
 			pedidoEl.appendChild(codigoEl);
 			
